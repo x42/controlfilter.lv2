@@ -7,11 +7,18 @@ LIBDIR ?= lib
 STRIP=strip
 STRIPFLAGS=-s
 
+cs_VERSION?=$(shell git describe --tags HEAD 2>/dev/null | sed 's/-g.*$$//;s/^v//' || echo "LV2")
 ###############################################################################
 LV2DIR ?= $(PREFIX)/$(LIBDIR)/lv2
 BUILDDIR=build/
 LV2NAME=cs
 LIB_EXT=.so
+
+###############################################################################
+# extract versions
+LV2VERSION=$(cs_VERSION)
+include git2lv2.mk
+
 
 ###############################################################################
 # check for build-dependencies
@@ -22,12 +29,11 @@ endif
 override CFLAGS += -fPIC -std=c99
 override CFLAGS += `pkg-config --cflags lv2`
 
-
+###############################################################################
 # build target definitions
 default: all
 
 all: $(BUILDDIR)manifest.ttl $(BUILDDIR)$(LV2NAME).ttl $(BUILDDIR)$(LV2NAME)$(LIB_EXT)
-
 
 $(BUILDDIR)manifest.ttl: manifest.ttl.in
 	@mkdir -p $(BUILDDIR)
@@ -36,7 +42,7 @@ $(BUILDDIR)manifest.ttl: manifest.ttl.in
 
 $(BUILDDIR)$(LV2NAME).ttl: $(LV2NAME).ttl.in
 	@mkdir -p $(BUILDDIR)
-	sed "s/@VERSION@//g" \
+	sed "s/@VERSION@/lv2:microVersion $(LV2MIC) ;lv2:minorVersion $(LV2MIN) ;/g" \
 		$(LV2NAME).ttl.in > $(BUILDDIR)$(LV2NAME).ttl
 
 
@@ -47,7 +53,8 @@ $(BUILDDIR)$(LV2NAME)$(LIB_EXT): $(LV2NAME).c
 	  -shared $(LV2LDFLAGS) $(LDFLAGS) $(LOADLIBES)
 	$(STRIP) $(STRIPFLAGS) $(BUILDDIR)$(LV2NAME)$(LIB_EXT)
 
-
+###############################################################################
+# install/uninstall/clean target definitions
 
 install: all
 	install -d $(DESTDIR)$(LV2DIR)/$(BUNDLE)
