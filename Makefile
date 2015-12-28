@@ -1,7 +1,8 @@
 #!/usr/bin/make -f
 
+OPTIMIZATIONS ?= -msse -msse2 -mfpmath=sse -ffast-math -fomit-frame-pointer -O3 -fno-finite-math-only
 PREFIX ?= /usr/local
-CFLAGS ?= -O3 -Wall
+CFLAGS ?= $(OPTIMIZATIONS) -Wall
 LIBDIR ?= lib
 
 STRIP=strip
@@ -10,15 +11,39 @@ STRIPFLAGS=-s
 cs_VERSION?=$(shell git describe --tags HEAD 2>/dev/null | sed 's/-g.*$$//;s/^v//' || echo "LV2")
 ###############################################################################
 LV2DIR ?= $(PREFIX)/$(LIBDIR)/lv2
-BUILDDIR=build/
+LOADLIBES=
 LV2NAME=cs
-LIB_EXT=.so
+BUNDLE=control_filters.lv2
+BUILDDIR=build/
+targets=
+
+UNAME=$(shell uname)
+ifeq ($(UNAME),Darwin)
+  LV2LDFLAGS=-dynamiclib
+  LIB_EXT=.dylib
+  EXTENDED_RE=-E
+  STRIPFLAGS=-u -r -arch all -s lv2syms
+  targets+=lv2syms
+else
+  LV2LDFLAGS=-Wl,-Bstatic -Wl,-Bdynamic
+  LIB_EXT=.so
+  EXTENDED_RE=-r
+endif
+
+ifneq ($(XWIN),)
+  CC=$(XWIN)-gcc
+  STRIP=$(XWIN)-strip
+  LV2LDFLAGS=-Wl,-Bstatic -Wl,-Bdynamic -Wl,--as-needed
+  LIB_EXT=.dll
+  override LDFLAGS += -static-libgcc -static-libstdc++
+endif
+
+targets+=$(BUILDDIR)$(LV2NAME)$(LIB_EXT)
 
 ###############################################################################
 # extract versions
 LV2VERSION=$(cs_VERSION)
 include git2lv2.mk
-
 
 ###############################################################################
 # check for build-dependencies
@@ -33,7 +58,10 @@ override CFLAGS += `pkg-config --cflags lv2`
 # build target definitions
 default: all
 
-all: $(BUILDDIR)manifest.ttl $(BUILDDIR)$(LV2NAME).ttl $(BUILDDIR)$(LV2NAME)$(LIB_EXT)
+all: $(BUILDDIR)manifest.ttl $(BUILDDIR)$(LV2NAME).ttl $(targets)
+
+lv2syms:
+	echo "_lv2_descriptor" > lv2syms
 
 $(BUILDDIR)manifest.ttl: manifest.ttl.in
 	@mkdir -p $(BUILDDIR)
@@ -44,7 +72,6 @@ $(BUILDDIR)$(LV2NAME).ttl: $(LV2NAME).ttl.in
 	@mkdir -p $(BUILDDIR)
 	sed "s/@VERSION@/lv2:microVersion $(LV2MIC) ;lv2:minorVersion $(LV2MIN) ;/g" \
 		$(LV2NAME).ttl.in > $(BUILDDIR)$(LV2NAME).ttl
-
 
 $(BUILDDIR)$(LV2NAME)$(LIB_EXT): $(LV2NAME).c
 	@mkdir -p $(BUILDDIR)
