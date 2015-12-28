@@ -54,6 +54,6 @@
 		lv2:minimum -10.0 ;
 		lv2:maximum  10.0 ;
 	] ;
-	rdfs:comment "Control Parameter Scale/Offset plugin - for use in modular synths"
+	rdfs:comment "Control Parameter Scale/Offset plugin - for use in modular synths:  out = in * Multiplier + Offset"
 	.
 

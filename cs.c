@@ -41,8 +41,6 @@ typedef struct {
 } ControValueScale;
 
 
-#define SMOOTHGAIN(AMP, TARGET_AMP) (AMP + (TARGET_AMP - AMP) * (float) MIN(pos, fade_len) / (float)fade_len)
-
 static void
 run(LV2_Handle instance, uint32_t n_samples)
 {
