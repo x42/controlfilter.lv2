@@ -1,0 +1,12 @@
+cfltpreset:linear_inver
+	a pset:Preset ;
+	lv2:appliesTo cfltplugin:linearscale ;
+
+	rdfs:label "out = 1 - in" ;
+	lv2:port [
+		lv2:symbol "mult";
+		pset:value -1.0;
+	], [
+		lv2:symbol "add";
+		pset:value 1.0;
+	] .
