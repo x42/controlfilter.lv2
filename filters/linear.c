@@ -18,7 +18,7 @@ INIT_FN(CSC_NAME) (ControlFilter *self)
 
 PROC_FN(CSC_NAME) (ControlFilter *self)
 {
-	*self->c_out = *self->c_in * (*self->port[0]) + (*self->port[1]);
+	P_OUT = P_IN * PORT(0) + PORT(1);
 }
 
 #endif
