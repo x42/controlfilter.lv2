@@ -10,12 +10,12 @@
 
 #elif defined CSC_CODE
 
-INIT_FN(CSC_NAME) (ControlFilter *self)
+INIT_FN(CSC_NAME)
 {
 	;
 }
 
-PROC_FN(CSC_NAME) (ControlFilter *self)
+PROC_FN(CSC_NAME)
 {
 	P_OUT = powf (PORT(0), P_IN);
 }

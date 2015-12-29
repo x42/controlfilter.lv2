@@ -12,12 +12,12 @@
 
 #elif defined CSC_CODE
 
-INIT_FN(CSC_NAME) (ControlFilter *self)
+INIT_FN(CSC_NAME)
 {
 	;
 }
 
-PROC_FN(CSC_NAME) (ControlFilter *self)
+PROC_FN(CSC_NAME)
 {
 	// Note: main function catches NaN and Inf
 	P_OUT = PORT(2) * log2f (fabsf (P_IN * PORT(1))) / log2f (PORT(0));

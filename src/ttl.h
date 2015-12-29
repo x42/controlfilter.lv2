@@ -69,8 +69,8 @@
 #define TTL_IPORTTOGGLE(IDX, SYM, DESC, VDFLT) \
 	TTL_IPORT(IDX, SYM, DESC, 0, 1, VDFLT, lv2:portProperty lv2:integer; lv2:portProperty lv2:toggled)
 
-#define XINIT_FN(NAME) static void flt_init_ ## NAME
-#define XPROC_FN(NAME) static void flt_proc_ ## NAME
+#define XINIT_FN(NAME) static void flt_init_ ## NAME (ControlFilter *self)
+#define XPROC_FN(NAME) static void flt_proc_ ## NAME (ControlFilter *self)
 #endif
 
 /* variable part */
@@ -102,6 +102,8 @@
 #define P_OUT (*self->c_out)
 
 #define PORT(N) (*self->port[N])
+#define PORT_CHANGED(N) (*self->port[N] != self->port_hist[N])
+#define PERIOD_CHANGED (self->n_samples != self->pn_samples)
 
 #define CSC_FLT(ID, FNX)
 
