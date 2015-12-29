@@ -7,8 +7,9 @@ modular synthesizers, in particular [ingen](http://drobilla.net/software/ingen/)
 So far 4 filters have been implemented:
 
 *   Linear:  `out = a * in + b`
-*   Base-n Logarithm:  `out = a * log ( abs (b * in) ) / log (c)`
+*   Invert:  `out = 1.0 / in`
 *   Exponential:  `out = a ^ in`
+*   Base-n Logarithm:  `out = a * log ( abs (b * in) ) / log (c)`
 *   Low Pass Filter, separate time-constants for rise (attack) and fall (release)
 
 Install
