@@ -7,7 +7,7 @@ CFLAGS ?= $(OPTIMIZATIONS) -Wall
 STRIP?=strip
 STRIPFLAGS?=-s
 
-cs_VERSION?=$(shell git describe --tags HEAD 2>/dev/null | sed 's/-g.*$$//;s/^v//' || echo "LV2")
+controlfilter_VERSION?=$(shell git describe --tags HEAD 2>/dev/null | sed 's/-g.*$$//;s/^v//' || echo "LV2")
 ###############################################################################
 
 LV2DIR ?= $(PREFIX)/lib/lv2
@@ -42,7 +42,7 @@ targets+=$(BUILDDIR)$(LV2NAME)$(LIB_EXT)
 
 ###############################################################################
 # extract versions
-LV2VERSION=$(cs_VERSION)
+LV2VERSION=$(controlfilter_VERSION)
 include git2lv2.mk
 
 ###############################################################################
