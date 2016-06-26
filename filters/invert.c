@@ -3,7 +3,7 @@
 #ifdef CSC_TTF
 
 	controlfilter:CSC_NAME
-	TTL_DEFAULTDEF("Control Linear Scale")
+	TTL_DEFAULTDEF("Control Invert")
 	; rdfs:comment "Control Parameter Inverter out = 1 / in"
 	.
 
