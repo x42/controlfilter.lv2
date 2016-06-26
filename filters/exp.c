@@ -3,7 +3,7 @@
 #ifdef CSC_TTF
 
 	controlfilter:CSC_NAME
-	TTL_DEFAULTDEF("Control Port Exponental")
+	TTL_DEFAULTDEF("Control Port Exponential")
 	, TTL_IPORTFLOAT(0, "base", "base",  -10, 10, 2.718281828)
 	; rdfs:comment "Control Parameter Exponential out = base ^ in"
 	.
