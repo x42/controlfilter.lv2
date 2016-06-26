@@ -4,7 +4,7 @@ controlfilter.lv2
 LV2 plugins to filter/process Control Parameters, intended to be used with
 modular synthesizers, in particular [ingen](http://drobilla.net/software/ingen/)
 
-So far 4 filters have been implemented:
+So far 5 filters have been implemented:
 
 *   Linear:  `out = a * in + b`
 *   Invert:  `out = 1.0 / in`
