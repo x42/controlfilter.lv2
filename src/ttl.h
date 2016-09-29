@@ -28,7 +28,7 @@
 			lv2:ControlPort ; \
 		lv2:index 0 ; \
 		lv2:symbol "in" ; \
-		lv2:name "Control Input" \
+		lv2:name "Control Input"; \
 		lv2:default 0.0 ; \
 		lv2:minimum -1.0 ; \
 		lv2:maximum 1.0 ; \
