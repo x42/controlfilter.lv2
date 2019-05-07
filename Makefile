@@ -52,8 +52,10 @@ ifeq ($(shell $(PKG_CONFIG) --exists lv2 || echo no), no)
   $(error "LV2 SDK was not found")
 endif
 
-override CFLAGS += -fPIC -std=c99
-override CFLAGS += `$(PKG_CONFIG) --cflags lv2`
+ifeq ($(XWIN),)
+override CFLAGS += -fPIC -fvisibility=hidden
+endif
+override CFLAGS += -std=c99 `$(PKG_CONFIG) --cflags lv2` -DVERSION="\"$(controlfilter_VERSION)\""
 
 ###############################################################################
 # build target definitions
