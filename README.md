@@ -18,7 +18,7 @@ Install
 Compiling the plugins requires LV2 SDK, gnu-make and a c-compiler.
 
 ```bash
-  git clone git://github.com/x42/controlfilter.lv2.git
+  git clone https://github.com/x42/controlfilter.lv2.git
   cd controlfilter.lv2
   make
   sudo make install PREFIX=/usr
