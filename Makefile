@@ -91,7 +91,7 @@ filters.c: $(FILTERS)
 		done;
 	echo >> filters.c;
 
-$(BUILDDIR)manifest.ttl: lv2ttl/manifest.ttl.in src/ttl.h filters.c
+$(BUILDDIR)manifest.ttl: lv2ttl/manifest.ttl.in src/ttl.h filters.c Makefile lv2ttl/presets.ttl.in presets/*.ttl
 	@mkdir -p $(BUILDDIR)
 	cat lv2ttl/manifest.ttl.in > $(BUILDDIR)manifest.ttl
 	$(CC) -E -I. -DCSC_MANIFEST filters.c \
