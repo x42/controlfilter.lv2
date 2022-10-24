@@ -3,6 +3,7 @@ cfltpreset:linear_inver
 	lv2:appliesTo cfltplugin:linearscale ;
 
 	rdfs:label "out = 1 - in" ;
+	rdfs:comment "in * -1 + 1" ;
 	lv2:port [
 		lv2:symbol "mult";
 		pset:value -1.0;
